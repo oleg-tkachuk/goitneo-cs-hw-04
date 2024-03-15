@@ -15,7 +15,7 @@ def find_files(directory):
     return file_paths
 
 
-def search_keywords(file_path, results):
+def search_keywords(keywords, file_path, results):
     try:
         with open(file_path, 'r', encoding='utf-8', errors='ignore') as file:
             text = file.read()
@@ -27,12 +27,12 @@ def search_keywords(file_path, results):
         print(f"[error] Error reading file {file_path}: {e}")
 
 
-def thread_function(file_paths, results):
+def thread_function(keywords, file_paths, results):
     for file_path in file_paths:
-        search_keywords(file_path, results)
+        search_keywords(keywords, file_path, results)
 
 
-def main(num_threads=10):
+def main(keywords, num_threads=5):
 
     start_time = time()
 
@@ -47,7 +47,7 @@ def main(num_threads=10):
         start = i * files_per_thread
         end = None if i == num_threads - 1 else (i + 1) * files_per_thread
         thread = threading.Thread(
-            target=thread_function, args=(files[start:end], results))
+            target=thread_function, args=(keywords, files[start:end], results))
         thread.start()
         threads.append(thread)
 
@@ -61,4 +61,4 @@ def main(num_threads=10):
 
 
 if __name__ == "__main__":
-    pp.pprint(main())
+    pp.pprint(main(keywords=keywords, num_threads=10))
