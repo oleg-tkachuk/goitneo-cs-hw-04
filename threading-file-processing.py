@@ -1,7 +1,7 @@
 import os
 import threading
-from time import time
 import pprint as pp
+from time import time
 from collections import defaultdict
 
 keywords = ['cat', 'dog', 'test', 'git', 'python', 'example', 'blah-blah-blah']
@@ -32,11 +32,11 @@ def thread_function(keywords, file_paths, results):
         search_keywords(keywords, file_path, results)
 
 
-def main(keywords, num_threads=5):
+def main(keywords, directory='.', num_threads=5):
 
     start_time = time()
 
-    files = find_files('.')
+    files = find_files(directory)
 
     results = defaultdict(list)
 
@@ -61,4 +61,4 @@ def main(keywords, num_threads=5):
 
 
 if __name__ == "__main__":
-    pp.pprint(main(keywords=keywords, num_threads=10))
+    pp.pprint(main(keywords=keywords, directory='.', num_threads=10))
