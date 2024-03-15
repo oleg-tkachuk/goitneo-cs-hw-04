@@ -6,6 +6,7 @@ from collections import defaultdict
 
 keywords = ['cat', 'dog', 'test', 'git', 'python', 'example', 'blah-blah-blah']
 
+
 def find_files(directory):
     file_paths = []
     for root, _, files in os.walk(directory):
@@ -45,7 +46,8 @@ def main(num_threads=10):
     for i in range(num_threads):
         start = i * files_per_thread
         end = None if i == num_threads - 1 else (i + 1) * files_per_thread
-        thread = threading.Thread(target=thread_function, args=(files[start:end], results))
+        thread = threading.Thread(
+            target=thread_function, args=(files[start:end], results))
         thread.start()
         threads.append(thread)
 
@@ -56,6 +58,7 @@ def main(num_threads=10):
     print(f"[info] Total execution time: {end_time - start_time} seconds\n")
 
     return dict(results)
+
 
 if __name__ == "__main__":
     pp.pprint(main())
